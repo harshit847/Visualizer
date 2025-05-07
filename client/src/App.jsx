@@ -6,12 +6,14 @@ import './app.css';
 const categories = ['Food', 'Transport', 'Utilities', 'Shopping', 'Other'];
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AA66CC'];
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 function App() {
   const [transactions, setTransactions] = useState([]);
   const [form, setForm] = useState({ amount: '', date: '', description: '', category: 'Food' });
 
   const fetchTransactions = async () => {
-    const res = await axios.get('http://localhost:5000/transactions');
+    const res = await axios.get(`${API_BASE_URL}/transactions`);
     setTransactions(res.data);
   };
 
@@ -21,7 +23,7 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post('http://localhost:5000/transactions', form);
+    await axios.post(`${API_BASE_URL}/transactions`, form);
     setForm({ amount: '', date: '', description: '', category: 'Food' });
     fetchTransactions();
   };
